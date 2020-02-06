@@ -10,7 +10,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
-        fetch("http://127.0.0.1:3001/api/users")
+        fetch("api/users")
             .then(res => res.json())
             .then(data => {
                 this.setState({
@@ -21,6 +21,7 @@ export default class Home extends Component {
     }
 
     render() {
+        console.log(this.state.users)
         return (
             <div>
                 {this.state.users.map(user => {
