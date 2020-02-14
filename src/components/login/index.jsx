@@ -6,7 +6,7 @@ export default class Login extends Component {
         return (
             <div id="Login">
                 <h1>Create an account</h1>
-                <form action="post" id="sign-up-form">
+                <form action="get" id="sign-up-form">
                     <select name="role" id="role">
                     <optgroup label="Roles">
                         <option value="user">User</option>

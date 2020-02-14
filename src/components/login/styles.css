@@ -1,4 +1,17 @@
 #Login {
     width: 40%;
-    margin: 150px auto;
+    margin: 70px auto;
+    text-align: center;
+}
+
+#Login form {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+#Login input {
+    max-width: 260px;
+    height: 30px;
+    margin: 0 auto;
+    /* margin: auto; */
 }
