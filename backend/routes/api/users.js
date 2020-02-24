@@ -26,33 +26,41 @@ router.get("/", async(req, res) => {
 router.post("/signup", async(req, res) => {
     // the code bellow is to prevent the CORS error
     // res.header('Access-Control-Allow-Origin', '*')
+    const user = await Users.findOne({ email: req.body.email })
+
+    if (user) {
+        return res.send('User already exists')
+    }
 
     try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10)
         const newUsers = new Users({
             _id: mongoose.mongo.ObjectId(),
             name: req.body.name,
-            password: hashedPassword,
+            password: bcrypt.hashSync(req.body.password, 10),
             role: req.body.role,
             email: req.body.email,
         })
 
-        newUsers.save().then(user => res.json(user))
+        await newUsers.save().then(user => res.json(user))
+
     } catch (error) {
-        console.log(error)
+        console.log("woops!", error.message)
     }
 
 })
 
-// router.post("/login", async(req, res) => {
-//     if (!Users.find({ name: req.body.name })) {
-//         return res.send("no users")
-//     }
-//     try {
-//         if(bcrypt.compare(req.body.password, ))
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
+
+router.post("/login", async(req, res) => {
+    const user = await Users.findOne({ email: req.body.email })
+
+    if (!user || !bcrypt.compareSync(req.body.password, user.password)) {
+        return res.send("no users")
+    }
+    try {
+        return res.send("Success")
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 module.exports = router
